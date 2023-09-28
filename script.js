@@ -4,6 +4,7 @@ const searchInput = document.querySelector(".search input");
 const searchButton = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon");
 const unit = document.querySelector(".unit"); // Reference to the unit selection dropdown
+const desc = document.querySelector(".desc"); // Reference to the weather description element
 
 async function getWeatherData(city, unit) {
     try {
@@ -17,6 +18,7 @@ async function getWeatherData(city, unit) {
             document.querySelector(".temp").innerText = Math.round(data.main.temp) + (unit == "metric"?"°C":unit == "imperial"?"°F":"K");
             document.querySelector(".humidity").innerText = data.main.humidity + "%";
             document.querySelector(".wind").innerText = data.wind.speed + "km/h";
+            document.querySelector(".desc").innerText = data.weather[0].description;
 
             if (data.weather[0].main == "Clear") {
                 weatherIcon.src = "images/clear.png";
@@ -48,5 +50,6 @@ function showError(message) {
 
 searchButton.addEventListener("click", () => {
     const selectedUnit = unit.value; // Get the selected unit (metric or imperial)
+    console.log(searchInput.value);
     getWeatherData(searchInput.value, selectedUnit);
 });
